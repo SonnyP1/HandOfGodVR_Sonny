@@ -7,14 +7,16 @@ public class XRHand : MonoBehaviour
 {
     [SerializeField] Animator HandAnimator;
     [SerializeField] LineRenderer LineRender;
+    [SerializeField] Transform PickUpTransform;
     private float _triggerInput;
     private float _gripInput;
     private Vector3 _pointerLoc;
+    private Transform _objectCurrentlyPickUpTransform;
+    private bool _isObjectPickUp = false;
     public void UpdateLocalPosition(Vector3 location)
     {
         _pointerLoc = location;
         transform.localPosition = _pointerLoc;
-        LookForObjectToPickUp();
     }
 
     public void UpdateLocalRotation(Quaternion rotation)
@@ -34,17 +36,44 @@ public class XRHand : MonoBehaviour
         HandAnimator.SetFloat("Grip", _gripInput);
     }
 
-    private void LookForObjectToPickUp()
+    private void LookForObjectToPickUpAndIfTriggerActivePickUp()
     {
-        //Ray Cast to object if it hit something pick it up only do this if trigger value it 1
-        if(_triggerInput > 0.9)
+        PickUpObject();
+
+        LineRender.SetPosition(0, _pointerLoc);
+        RaycastHit hit;
+        if (Physics.Raycast(_pointerLoc, transform.forward, out hit, Mathf.Infinity))
         {
-            RaycastHit hit;
-            if(Physics.Raycast(_pointerLoc,transform.forward,out hit, 10f,LayerMask.NameToLayer("Pickable")))
+            LineRender.SetPosition(1, hit.point);
+            LineRender.enabled = true;
+            if (_triggerInput > 0.9)
             {
-                LineRender.SetPosition(1,hit.point);
-                Debug.DrawRay(_pointerLoc,transform.forward*hit.distance,Color.red);
+                _objectCurrentlyPickUpTransform = hit.collider.GetComponent<Transform>();
+                _isObjectPickUp = true;
             }
         }
+        else
+        {
+            LineRender.enabled = false;
+        }
+    }
+
+    private void PickUpObject()
+    {
+        if (_isObjectPickUp)
+        {
+            _objectCurrentlyPickUpTransform.position = PickUpTransform.position;
+            if (_triggerInput < 0.5)
+            {
+                LineRender.enabled = false;
+                _isObjectPickUp = false;
+                _objectCurrentlyPickUpTransform = null;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        LookForObjectToPickUpAndIfTriggerActivePickUp();
     }
 }
