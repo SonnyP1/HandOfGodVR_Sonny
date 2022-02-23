@@ -5,14 +5,35 @@ using UnityEngine;
 
 public class XRHand : MonoBehaviour
 {
+    [SerializeField] LazerPoint lazerPointer;
     [SerializeField] Animator HandAnimator;
-    [SerializeField] LineRenderer LineRender;
-    [SerializeField] Transform PickUpTransform;
+    [SerializeField] GameObject GrabPoint;
+    [SerializeField] Transform ThrowVelocityRefPoint;
+    IDragable dragableObjectInHand;
+
+
+    [Header("Values")]
+    Vector3 _velocity;
+    Vector3 _oldPos;
+    Vector3 PositionOneSecondBefore;
     private float _triggerInput;
     private float _gripInput;
     private Vector3 _pointerLoc;
-    private Transform _objectCurrentlyPickUpTransform;
-    private bool _isObjectPickUp = false;
+
+    IEnumerator CalculateAverageSpeed()
+    {
+        while(true)
+        {
+            _velocity = (ThrowVelocityRefPoint.position - _oldPos) / 0.1f;
+            _oldPos = ThrowVelocityRefPoint.position;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    private void Start()
+    {
+        PositionOneSecondBefore = transform.position;
+        StartCoroutine(CalculateAverageSpeed());
+    }
     public void UpdateLocalPosition(Vector3 location)
     {
         _pointerLoc = location;
@@ -36,44 +57,29 @@ public class XRHand : MonoBehaviour
         HandAnimator.SetFloat("Grip", _gripInput);
     }
 
-    private void LookForObjectToPickUpAndIfTriggerActivePickUp()
+    internal void TriggerButtonPressed()
     {
-        PickUpObject();
-
-        LineRender.SetPosition(0, _pointerLoc);
-        RaycastHit hit;
-        if (Physics.Raycast(_pointerLoc, transform.forward, out hit, Mathf.Infinity))
+        if(lazerPointer != null && lazerPointer.GetFocusedObject(out GameObject objectInFocus,out Vector3 contactPoint))
         {
-            LineRender.SetPosition(1, hit.point);
-            LineRender.enabled = true;
-            if (_triggerInput > 0.9)
+            IDragable objectAsDragable = objectInFocus.GetComponent<IDragable>();
+            if(objectAsDragable == null)
             {
-                _objectCurrentlyPickUpTransform = hit.collider.GetComponent<Transform>();
-                _isObjectPickUp = true;
+                objectAsDragable = objectInFocus.GetComponentInParent<IDragable>();
             }
-        }
-        else
-        {
-            LineRender.enabled = false;
-        }
-    }
 
-    private void PickUpObject()
-    {
-        if (_isObjectPickUp)
-        {
-            _objectCurrentlyPickUpTransform.position = PickUpTransform.position;
-            if (_triggerInput < 0.5)
+            if(objectAsDragable != null)
             {
-                LineRender.enabled = false;
-                _isObjectPickUp = false;
-                _objectCurrentlyPickUpTransform = null;
+                objectAsDragable.Grab(GrabPoint, contactPoint);
+                dragableObjectInHand = objectAsDragable;
             }
         }
     }
 
-    private void Update()
+    internal void TriggerButtonRelease()
     {
-        LookForObjectToPickUpAndIfTriggerActivePickUp();
+        if(dragableObjectInHand != null)
+        {
+            dragableObjectInHand.Release(_velocity);
+        }
     }
 }

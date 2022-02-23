@@ -62,6 +62,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TriggerBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""d237d04b-923d-4624-a0e9-90701f3329d3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""GripAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f8514ca-acc6-4d2c-a48b-109eec86b6e3"",
+                    ""path"": ""<XRController>{RightHand}/triggerPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TriggerBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +140,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_XRRightController_rotation = m_XRRightController.FindAction("rotation", throwIfNotFound: true);
         m_XRRightController_TriggerAxis = m_XRRightController.FindAction("TriggerAxis", throwIfNotFound: true);
         m_XRRightController_GripAxis = m_XRRightController.FindAction("GripAxis", throwIfNotFound: true);
+        m_XRRightController_TriggerBtn = m_XRRightController.FindAction("TriggerBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,6 +204,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_XRRightController_rotation;
     private readonly InputAction m_XRRightController_TriggerAxis;
     private readonly InputAction m_XRRightController_GripAxis;
+    private readonly InputAction m_XRRightController_TriggerBtn;
     public struct XRRightControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -191,6 +213,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @rotation => m_Wrapper.m_XRRightController_rotation;
         public InputAction @TriggerAxis => m_Wrapper.m_XRRightController_TriggerAxis;
         public InputAction @GripAxis => m_Wrapper.m_XRRightController_GripAxis;
+        public InputAction @TriggerBtn => m_Wrapper.m_XRRightController_TriggerBtn;
         public InputActionMap Get() { return m_Wrapper.m_XRRightController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -212,6 +235,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GripAxis.started -= m_Wrapper.m_XRRightControllerActionsCallbackInterface.OnGripAxis;
                 @GripAxis.performed -= m_Wrapper.m_XRRightControllerActionsCallbackInterface.OnGripAxis;
                 @GripAxis.canceled -= m_Wrapper.m_XRRightControllerActionsCallbackInterface.OnGripAxis;
+                @TriggerBtn.started -= m_Wrapper.m_XRRightControllerActionsCallbackInterface.OnTriggerBtn;
+                @TriggerBtn.performed -= m_Wrapper.m_XRRightControllerActionsCallbackInterface.OnTriggerBtn;
+                @TriggerBtn.canceled -= m_Wrapper.m_XRRightControllerActionsCallbackInterface.OnTriggerBtn;
             }
             m_Wrapper.m_XRRightControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -228,6 +254,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GripAxis.started += instance.OnGripAxis;
                 @GripAxis.performed += instance.OnGripAxis;
                 @GripAxis.canceled += instance.OnGripAxis;
+                @TriggerBtn.started += instance.OnTriggerBtn;
+                @TriggerBtn.performed += instance.OnTriggerBtn;
+                @TriggerBtn.canceled += instance.OnTriggerBtn;
             }
         }
     }
@@ -238,5 +267,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRotation(InputAction.CallbackContext context);
         void OnTriggerAxis(InputAction.CallbackContext context);
         void OnGripAxis(InputAction.CallbackContext context);
+        void OnTriggerBtn(InputAction.CallbackContext context);
     }
 }
