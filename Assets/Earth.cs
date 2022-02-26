@@ -18,6 +18,11 @@ public class Earth : MonoBehaviour
         transform.Rotate(RotSpeedY * Time.deltaTime, 0f, 0f);
     }
 
+    public void RotateBasedOnVelocity(float velocity)
+    {
+        WalkMan.Rotate(0f, 150 * -velocity * Time.deltaTime, 0f, Space.World);
+        transform.Rotate(0f, 150 * -velocity * Time.deltaTime, 0f, Space.World);
+    }
     public void RotateLeft()
     {
         WalkMan.Rotate(0f, RotSpeedX * Time.deltaTime, 0f, Space.World);
