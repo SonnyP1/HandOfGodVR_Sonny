@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Earth : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] float RotSpeedY;
+    [SerializeField] float RotSpeedX;
+    [SerializeField] Transform WalkMan;
     void Start()
     {
         
@@ -13,6 +15,17 @@ public class Earth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(20f * Time.deltaTime, 0f, 0f);
+        transform.Rotate(RotSpeedY * Time.deltaTime, 0f, 0f);
+    }
+
+    public void RotateLeft()
+    {
+        WalkMan.Rotate(0f, RotSpeedX * Time.deltaTime, 0f, Space.World);
+        transform.Rotate(0f, RotSpeedX * Time.deltaTime, 0f,Space.World);
+    }
+    public void RotateRight()
+    {
+        WalkMan.Rotate(0f, -RotSpeedX * Time.deltaTime, 0f, Space.World);
+        transform.Rotate(0f, -RotSpeedX * Time.deltaTime, 0f, Space.World);
     }
 }

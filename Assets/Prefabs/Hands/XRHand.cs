@@ -75,6 +75,18 @@ public class XRHand : MonoBehaviour
         }
     }
 
+    internal void UpdateStickValue(Vector2 stickInput)
+    {
+        if (stickInput.x > 0.5)
+        {
+            FindObjectOfType<Earth>().RotateRight();
+        }
+        else if (stickInput.x < -0.5f)
+        {
+            FindObjectOfType<Earth>().RotateLeft();
+        }
+    }
+
     internal void TriggerButtonRelease()
     {
         if(dragableObjectInHand != null)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,11 +29,26 @@ public class InputComponent : MonoBehaviour
 
     private void Start()
     {
+        RightHandInputs();
+        LeftHandInputs();
+    }
+
+
+    private void RightHandInputs()
+    {
         _playerInput.XRRightController.position.performed += ctx => RightHand.UpdateLocalPosition(ctx.ReadValue<Vector3>());
         _playerInput.XRRightController.rotation.performed += ctx => RightHand.UpdateLocalRotation(ctx.ReadValue<Quaternion>());
         _playerInput.XRRightController.TriggerAxis.performed += ctx => RightHand.UpdateTriggerValue(ctx.ReadValue<float>());
         _playerInput.XRRightController.GripAxis.performed += ctx => RightHand.UpdateGripValue(ctx.ReadValue<float>());
         _playerInput.XRRightController.TriggerBtn.performed += ctx => RightHand.TriggerButtonPressed();
         _playerInput.XRRightController.TriggerBtn.canceled += ctx => RightHand.TriggerButtonRelease();
+    }
+    private void LeftHandInputs()
+    {
+        _playerInput.XRLeftController.position.performed += ctx => LeftHand.UpdateLocalPosition(ctx.ReadValue<Vector3>());
+        _playerInput.XRLeftController.rotation.performed += ctx => LeftHand.UpdateLocalRotation(ctx.ReadValue<Quaternion>());
+        _playerInput.XRLeftController.TriggerAxis.performed += ctx => LeftHand.UpdateTriggerValue(ctx.ReadValue<float>());
+        _playerInput.XRLeftController.GripAxis.performed += ctx => LeftHand.UpdateGripValue(ctx.ReadValue<float>());
+        _playerInput.XRLeftController.LeftStickAxis.performed += ctx => LeftHand.UpdateStickValue(ctx.ReadValue<Vector2>());
     }
 }

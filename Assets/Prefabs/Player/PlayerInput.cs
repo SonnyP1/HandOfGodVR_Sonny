@@ -130,6 +130,114 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""XRLeftController"",
+            ""id"": ""fd444f05-669e-49ae-ae91-6d88f4b64461"",
+            ""actions"": [
+                {
+                    ""name"": ""position"",
+                    ""type"": ""Value"",
+                    ""id"": ""edc9d9ca-d035-4805-9c88-08bf05aece3d"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""rotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""79fa61df-a04f-4104-b228-f7d6267c4fb7"",
+                    ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TriggerAxis"",
+                    ""type"": ""Value"",
+                    ""id"": ""299f520f-df26-4a85-9521-c3052fbbf94d"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GripAxis"",
+                    ""type"": ""Value"",
+                    ""id"": ""e4df9c06-ced0-413a-a427-ab6d5caedb4d"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftStickAxis"",
+                    ""type"": ""Value"",
+                    ""id"": ""18c32d73-3822-487a-976d-04818cc23fc1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d8438b77-c8cd-4f62-a0e6-922e367db466"",
+                    ""path"": ""<XRController>{LeftHand}/pointerPosition"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7eb59382-4324-4820-9e24-00393d965045"",
+                    ""path"": ""<XRController>{LeftHand}/pointerRotation"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4a55fd6-2241-4fb6-a655-878898f5c47f"",
+                    ""path"": ""<XRController>{LeftHand}/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TriggerAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c947102c-d63c-4004-8f68-5e06ffc06cb7"",
+                    ""path"": ""<XRController>{LeftHand}/grip"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GripAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b404396-befc-47f6-a20c-b330facd18e2"",
+                    ""path"": ""<XRController>{LeftHand}/thumbstick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftStickAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -141,6 +249,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_XRRightController_TriggerAxis = m_XRRightController.FindAction("TriggerAxis", throwIfNotFound: true);
         m_XRRightController_GripAxis = m_XRRightController.FindAction("GripAxis", throwIfNotFound: true);
         m_XRRightController_TriggerBtn = m_XRRightController.FindAction("TriggerBtn", throwIfNotFound: true);
+        // XRLeftController
+        m_XRLeftController = asset.FindActionMap("XRLeftController", throwIfNotFound: true);
+        m_XRLeftController_position = m_XRLeftController.FindAction("position", throwIfNotFound: true);
+        m_XRLeftController_rotation = m_XRLeftController.FindAction("rotation", throwIfNotFound: true);
+        m_XRLeftController_TriggerAxis = m_XRLeftController.FindAction("TriggerAxis", throwIfNotFound: true);
+        m_XRLeftController_GripAxis = m_XRLeftController.FindAction("GripAxis", throwIfNotFound: true);
+        m_XRLeftController_LeftStickAxis = m_XRLeftController.FindAction("LeftStickAxis", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -261,6 +376,71 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public XRRightControllerActions @XRRightController => new XRRightControllerActions(this);
+
+    // XRLeftController
+    private readonly InputActionMap m_XRLeftController;
+    private IXRLeftControllerActions m_XRLeftControllerActionsCallbackInterface;
+    private readonly InputAction m_XRLeftController_position;
+    private readonly InputAction m_XRLeftController_rotation;
+    private readonly InputAction m_XRLeftController_TriggerAxis;
+    private readonly InputAction m_XRLeftController_GripAxis;
+    private readonly InputAction m_XRLeftController_LeftStickAxis;
+    public struct XRLeftControllerActions
+    {
+        private @PlayerInput m_Wrapper;
+        public XRLeftControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @position => m_Wrapper.m_XRLeftController_position;
+        public InputAction @rotation => m_Wrapper.m_XRLeftController_rotation;
+        public InputAction @TriggerAxis => m_Wrapper.m_XRLeftController_TriggerAxis;
+        public InputAction @GripAxis => m_Wrapper.m_XRLeftController_GripAxis;
+        public InputAction @LeftStickAxis => m_Wrapper.m_XRLeftController_LeftStickAxis;
+        public InputActionMap Get() { return m_Wrapper.m_XRLeftController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(XRLeftControllerActions set) { return set.Get(); }
+        public void SetCallbacks(IXRLeftControllerActions instance)
+        {
+            if (m_Wrapper.m_XRLeftControllerActionsCallbackInterface != null)
+            {
+                @position.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnPosition;
+                @position.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnPosition;
+                @position.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnPosition;
+                @rotation.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnRotation;
+                @rotation.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnRotation;
+                @rotation.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnRotation;
+                @TriggerAxis.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnTriggerAxis;
+                @TriggerAxis.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnTriggerAxis;
+                @TriggerAxis.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnTriggerAxis;
+                @GripAxis.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnGripAxis;
+                @GripAxis.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnGripAxis;
+                @GripAxis.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnGripAxis;
+                @LeftStickAxis.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnLeftStickAxis;
+                @LeftStickAxis.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnLeftStickAxis;
+                @LeftStickAxis.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnLeftStickAxis;
+            }
+            m_Wrapper.m_XRLeftControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @position.started += instance.OnPosition;
+                @position.performed += instance.OnPosition;
+                @position.canceled += instance.OnPosition;
+                @rotation.started += instance.OnRotation;
+                @rotation.performed += instance.OnRotation;
+                @rotation.canceled += instance.OnRotation;
+                @TriggerAxis.started += instance.OnTriggerAxis;
+                @TriggerAxis.performed += instance.OnTriggerAxis;
+                @TriggerAxis.canceled += instance.OnTriggerAxis;
+                @GripAxis.started += instance.OnGripAxis;
+                @GripAxis.performed += instance.OnGripAxis;
+                @GripAxis.canceled += instance.OnGripAxis;
+                @LeftStickAxis.started += instance.OnLeftStickAxis;
+                @LeftStickAxis.performed += instance.OnLeftStickAxis;
+                @LeftStickAxis.canceled += instance.OnLeftStickAxis;
+            }
+        }
+    }
+    public XRLeftControllerActions @XRLeftController => new XRLeftControllerActions(this);
     public interface IXRRightControllerActions
     {
         void OnPosition(InputAction.CallbackContext context);
@@ -268,5 +448,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnTriggerAxis(InputAction.CallbackContext context);
         void OnGripAxis(InputAction.CallbackContext context);
         void OnTriggerBtn(InputAction.CallbackContext context);
+    }
+    public interface IXRLeftControllerActions
+    {
+        void OnPosition(InputAction.CallbackContext context);
+        void OnRotation(InputAction.CallbackContext context);
+        void OnTriggerAxis(InputAction.CallbackContext context);
+        void OnGripAxis(InputAction.CallbackContext context);
+        void OnLeftStickAxis(InputAction.CallbackContext context);
     }
 }
