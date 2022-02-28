@@ -170,18 +170,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftStickAxis",
-                    "type": "Value",
-                    "id": "18c32d73-3822-487a-976d-04818cc23fc1",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "MenuButton",
                     "type": "Button",
                     "id": "3d1cc6f1-d68f-4dea-9afc-066217081c5c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TriggerBtn",
+                    "type": "Button",
+                    "id": "b03c7e39-6667-4d32-897d-2a547da3f1c5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -235,23 +235,23 @@
                 },
                 {
                     "name": "",
-                    "id": "4b404396-befc-47f6-a20c-b330facd18e2",
-                    "path": "<XRController>{LeftHand}/thumbstick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LeftStickAxis",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4b70efff-4b88-4195-81ce-5e5cf1067cd6",
                     "path": "<XRController>{LeftHand}/menu",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "MenuButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aae44b9b-da6c-4112-a6ce-34aab5e9caff",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerBtn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

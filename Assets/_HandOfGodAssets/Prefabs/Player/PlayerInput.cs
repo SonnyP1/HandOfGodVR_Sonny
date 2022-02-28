@@ -192,18 +192,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""LeftStickAxis"",
-                    ""type"": ""Value"",
-                    ""id"": ""18c32d73-3822-487a-976d-04818cc23fc1"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""MenuButton"",
                     ""type"": ""Button"",
                     ""id"": ""3d1cc6f1-d68f-4dea-9afc-066217081c5c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TriggerBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""b03c7e39-6667-4d32-897d-2a547da3f1c5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -257,23 +257,23 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4b404396-befc-47f6-a20c-b330facd18e2"",
-                    ""path"": ""<XRController>{LeftHand}/thumbstick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickAxis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4b70efff-4b88-4195-81ce-5e5cf1067cd6"",
                     ""path"": ""<XRController>{LeftHand}/menu"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MenuButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aae44b9b-da6c-4112-a6ce-34aab5e9caff"",
+                    ""path"": ""<XRController>{LeftHand}/triggerPressed"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TriggerBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -296,8 +296,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_XRLeftController_rotation = m_XRLeftController.FindAction("rotation", throwIfNotFound: true);
         m_XRLeftController_TriggerAxis = m_XRLeftController.FindAction("TriggerAxis", throwIfNotFound: true);
         m_XRLeftController_GripAxis = m_XRLeftController.FindAction("GripAxis", throwIfNotFound: true);
-        m_XRLeftController_LeftStickAxis = m_XRLeftController.FindAction("LeftStickAxis", throwIfNotFound: true);
         m_XRLeftController_MenuButton = m_XRLeftController.FindAction("MenuButton", throwIfNotFound: true);
+        m_XRLeftController_TriggerBtn = m_XRLeftController.FindAction("TriggerBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -434,8 +434,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_XRLeftController_rotation;
     private readonly InputAction m_XRLeftController_TriggerAxis;
     private readonly InputAction m_XRLeftController_GripAxis;
-    private readonly InputAction m_XRLeftController_LeftStickAxis;
     private readonly InputAction m_XRLeftController_MenuButton;
+    private readonly InputAction m_XRLeftController_TriggerBtn;
     public struct XRLeftControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -444,8 +444,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @rotation => m_Wrapper.m_XRLeftController_rotation;
         public InputAction @TriggerAxis => m_Wrapper.m_XRLeftController_TriggerAxis;
         public InputAction @GripAxis => m_Wrapper.m_XRLeftController_GripAxis;
-        public InputAction @LeftStickAxis => m_Wrapper.m_XRLeftController_LeftStickAxis;
         public InputAction @MenuButton => m_Wrapper.m_XRLeftController_MenuButton;
+        public InputAction @TriggerBtn => m_Wrapper.m_XRLeftController_TriggerBtn;
         public InputActionMap Get() { return m_Wrapper.m_XRLeftController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -467,12 +467,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GripAxis.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnGripAxis;
                 @GripAxis.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnGripAxis;
                 @GripAxis.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnGripAxis;
-                @LeftStickAxis.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnLeftStickAxis;
-                @LeftStickAxis.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnLeftStickAxis;
-                @LeftStickAxis.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnLeftStickAxis;
                 @MenuButton.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnMenuButton;
                 @MenuButton.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnMenuButton;
                 @MenuButton.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnMenuButton;
+                @TriggerBtn.started -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnTriggerBtn;
+                @TriggerBtn.performed -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnTriggerBtn;
+                @TriggerBtn.canceled -= m_Wrapper.m_XRLeftControllerActionsCallbackInterface.OnTriggerBtn;
             }
             m_Wrapper.m_XRLeftControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -489,12 +489,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GripAxis.started += instance.OnGripAxis;
                 @GripAxis.performed += instance.OnGripAxis;
                 @GripAxis.canceled += instance.OnGripAxis;
-                @LeftStickAxis.started += instance.OnLeftStickAxis;
-                @LeftStickAxis.performed += instance.OnLeftStickAxis;
-                @LeftStickAxis.canceled += instance.OnLeftStickAxis;
                 @MenuButton.started += instance.OnMenuButton;
                 @MenuButton.performed += instance.OnMenuButton;
                 @MenuButton.canceled += instance.OnMenuButton;
+                @TriggerBtn.started += instance.OnTriggerBtn;
+                @TriggerBtn.performed += instance.OnTriggerBtn;
+                @TriggerBtn.canceled += instance.OnTriggerBtn;
             }
         }
     }
@@ -514,7 +514,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRotation(InputAction.CallbackContext context);
         void OnTriggerAxis(InputAction.CallbackContext context);
         void OnGripAxis(InputAction.CallbackContext context);
-        void OnLeftStickAxis(InputAction.CallbackContext context);
         void OnMenuButton(InputAction.CallbackContext context);
+        void OnTriggerBtn(InputAction.CallbackContext context);
     }
 }

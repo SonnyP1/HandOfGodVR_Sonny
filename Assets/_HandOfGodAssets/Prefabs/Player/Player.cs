@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Earth : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    [SerializeField] float RotSpeedY;
+    // Start is called before the first frame update
     void Start()
     {
         
@@ -13,6 +13,6 @@ public class Earth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(RotSpeedY * Time.deltaTime, 0f, 0f);
+        
     }
 }
