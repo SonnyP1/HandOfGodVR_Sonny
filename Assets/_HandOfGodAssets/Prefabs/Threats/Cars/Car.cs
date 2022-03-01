@@ -9,7 +9,6 @@ public class Car : Threat , IDragable
     [SerializeField] float MoveCarLaneSpeed = 5f;
     Vector3 desiredPos;
 
-
     public override void Init()
     {
         OrbitMovementComp orbitMovementComp = GetComponent<OrbitMovementComp>();
@@ -42,18 +41,14 @@ public class Car : Threat , IDragable
 
     public void Grab(GameObject grabber, Vector3 grabPoint)
     {
-        Debug.Log("GrabingCar");
         Vector3 posToMoveCar = GetClosestLanePos(grabPoint);
         desiredPos = posToMoveCar;
     }
 
     public void Release(Vector3 ThrowVelocity)
     {
-        
+
     }
-
-
-
     IEnumerator MoveCarToDesiredPos()
     {
         while(true)

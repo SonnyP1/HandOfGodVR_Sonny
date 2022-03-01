@@ -25,7 +25,6 @@ public class XRHand : MonoBehaviour
     private float _gripInput;
     private Vector3 _pointerLoc;
     private bool _pauseBool = false;
-
     IEnumerator CalculateAverageSpeed()
     {
         while(true)
@@ -76,7 +75,6 @@ public class XRHand : MonoBehaviour
 
     internal void TriggerButtonPressed()
     {
-
         if(lazerPointer != null && lazerPointer.GetFocusedObject(out GameObject objectInFocus,out Vector3 contactPoint))
         {
             IDragable objectAsDragable = objectInFocus.GetComponent<IDragable>();
@@ -91,16 +89,6 @@ public class XRHand : MonoBehaviour
                 dragableObjectInHand = objectAsDragable;
             }
         }
-
-    }
-
-    IEnumerator KeepGrabingThreat(GameObject grabPoint, Vector3 contactPoint)
-    {
-       while(true)
-       {
-            dragableObjectInHand.Grab(grabPoint, contactPoint);
-            yield return new WaitForEndOfFrame();
-       }
     }
 
     internal void MenuButtonPressed()
