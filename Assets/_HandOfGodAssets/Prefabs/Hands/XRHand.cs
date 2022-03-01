@@ -93,6 +93,16 @@ public class XRHand : MonoBehaviour
         }
 
     }
+
+    IEnumerator KeepGrabingThreat(GameObject grabPoint, Vector3 contactPoint)
+    {
+       while(true)
+       {
+            dragableObjectInHand.Grab(grabPoint, contactPoint);
+            yield return new WaitForEndOfFrame();
+       }
+    }
+
     internal void MenuButtonPressed()
     {
         if (!_pauseBool)

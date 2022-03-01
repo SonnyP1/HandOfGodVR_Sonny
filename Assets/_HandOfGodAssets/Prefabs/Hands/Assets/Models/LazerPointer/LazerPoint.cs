@@ -17,7 +17,6 @@ public class LazerPoint : MonoBehaviour
         {
             objectInFocus = hitInfo.collider.gameObject;
             contactPoint = hitInfo.point;
-            Debug.Log(objectInFocus);
             return true;
         }
         return false;
