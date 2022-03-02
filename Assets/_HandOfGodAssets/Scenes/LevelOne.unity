@@ -4450,7 +4450,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5349830899765568759, guid: f9dfbbe828cd9ca448322ed65ce6f3de, type: 3}
       propertyPath: PointerTraceLayerMask.m_Bits
-      value: 63
+      value: 191
       objectReference: {fileID: 0}
     - target: {fileID: 6829104373023321384, guid: f9dfbbe828cd9ca448322ed65ce6f3de, type: 3}
       propertyPath: m_RootOrder
@@ -6726,17 +6726,25 @@ PrefabInstance:
       value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3021915241881770526, guid: 7610302b28e413040947fda7eed5c588, type: 3}
+      propertyPath: MaxSpawnInterval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021915241881770526, guid: 7610302b28e413040947fda7eed5c588, type: 3}
+      propertyPath: MinSpawnInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021915241881770526, guid: 7610302b28e413040947fda7eed5c588, type: 3}
       propertyPath: Threats.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3021915241881770526, guid: 7610302b28e413040947fda7eed5c588, type: 3}
       propertyPath: Threats.Array.data[0]
       value: 
-      objectReference: {fileID: -1554950626311745005, guid: c8910f076c3e2c340b77ce344e328791, type: 3}
+      objectReference: {fileID: 8027803365147431892, guid: c8910f076c3e2c340b77ce344e328791, type: 3}
     - target: {fileID: 3021915241881770526, guid: 7610302b28e413040947fda7eed5c588, type: 3}
       propertyPath: Threats.Array.data[1]
       value: 
-      objectReference: {fileID: -1554950626311745005, guid: 82bf0f855e2bb62438e84ea05b9d06d3, type: 3}
+      objectReference: {fileID: 6560440942915319721, guid: 82bf0f855e2bb62438e84ea05b9d06d3, type: 3}
     - target: {fileID: 8904144692614381707, guid: 7610302b28e413040947fda7eed5c588, type: 3}
       propertyPath: m_RootOrder
       value: 4
