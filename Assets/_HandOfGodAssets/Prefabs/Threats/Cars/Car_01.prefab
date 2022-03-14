@@ -55,6 +55,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7972559050520377777, guid: 75df606b8beec2743a69364c6873edf3, type: 3}
+      propertyPath: ExplosionSpawn
+      value: 
+      objectReference: {fileID: 3434742879746085233}
+    - target: {fileID: 7972559050520377777, guid: 75df606b8beec2743a69364c6873edf3, type: 3}
+      propertyPath: CarPivotTransform
+      value: 
+      objectReference: {fileID: 3434742879746085233}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75df606b8beec2743a69364c6873edf3, type: 3}
 --- !u!4 &3371405835657250515 stripped
@@ -117,6 +125,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 876ec20566a20c24c8f0e52b19cbbefa, type: 3}
+      propertyPath: m_TagString
+      value: Car
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 876ec20566a20c24c8f0e52b19cbbefa, type: 3}
 --- !u!1 &2657538158066994123 stripped
@@ -124,19 +136,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 876ec20566a20c24c8f0e52b19cbbefa, type: 3}
   m_PrefabInstance: {fileID: 2891329712677467802}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &6472256312346871357
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2657538158066994123}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9765332, y: 1.5877706, z: 3.2971969}
-  m_Center: {x: 0, y: 0.80128676, z: -0.000000059604645}
 --- !u!54 &3156099778746905987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,3 +152,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6472256312346871357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2657538158066994123}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9765332, y: 1.5877706, z: 3.2971969}
+  m_Center: {x: 0, y: 0.80128676, z: -0.000000059604645}
+--- !u!4 &3434742879746085233 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 876ec20566a20c24c8f0e52b19cbbefa, type: 3}
+  m_PrefabInstance: {fileID: 2891329712677467802}
+  m_PrefabAsset: {fileID: 0}

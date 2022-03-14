@@ -301,6 +301,8 @@ MonoBehaviour:
   LaneDetectionLaymask:
     serializedVersion: 2
     m_Bits: 128
+  ExplosionEffect: {fileID: 6918331612749781511, guid: 456654ece0aa26f4fb39130403a946c2, type: 3}
+  CarPivotTransform: {fileID: 3388368459344407734}
 --- !u!4 &5595691406520359756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3888562281772914846, guid: f0d154d9f56605c4cb59f77180b06785, type: 3}
