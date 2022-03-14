@@ -8,7 +8,7 @@ public enum SideHand
     LeftHand,
     RightHand
 }
-public class XRHand : MonoBehaviour
+public class XRHand : MonoBehaviour , XRControllerInterface
 {
     [SerializeField] LazerPoint lazerPointer;
     [SerializeField] Animator HandAnimator;
@@ -64,16 +64,6 @@ public class XRHand : MonoBehaviour
         HandAnimator.SetFloat("Trigger", _triggerInput);
     }
 
-    internal void PrimaryButtonPressed()
-    {
-        //UI STUFF
-        Debug.Log("Primary Button Pressed");
-        if(lazerPointer !=null && lazerPointer.GetFocusedObject(out GameObject objectInFocus,out Vector3 contactPoint))
-        {
-            Debug.Log(objectInFocus);
-        }
-    }
-
     internal void TriggerButtonPressed()
     {
 
@@ -116,5 +106,14 @@ public class XRHand : MonoBehaviour
         {
             dragableObjectInHand.Release(_velocity);
         }
+    }
+
+    public Vector2 GetPointerScreenPosition()
+    {
+        if(lazerPointer!=null)
+        {
+            return lazerPointer.GetPointerScreenPosition();
+        }
+        return Vector2.zero;
     }
 }

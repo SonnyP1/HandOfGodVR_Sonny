@@ -24,4 +24,9 @@ public class PauseMenu : MonoBehaviour
             PauseCanvas.enabled = false;
         }
     }
+
+    public void testBtn()
+    {
+        Debug.Log("BUTTON PRESSED");
+    }
 }

@@ -95,10 +95,10 @@ public class Car : Threat, IDragable
         float lerpAlpha = Mathf.Clamp(Time.deltaTime * LaneChangeSpeed,0f,1f);
         CarPivot.rotation = Quaternion.Lerp(CarPivot.rotation, destinationLane.parent.rotation, lerpAlpha);
 
-        if(Quaternion.Angle(startRotation,transform.rotation) <= 0)
-        {
-            BlowUp();
-        }
+        //if(Quaternion.Angle(startRotation,transform.rotation) <= 0)
+       // {
+          //  BlowUp();
+        //}
     }
 
     public void Release(Vector3 ThrowVelocity)

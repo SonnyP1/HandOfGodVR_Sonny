@@ -126,6 +126,10 @@ PrefabInstance:
       value: Car_01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 876ec20566a20c24c8f0e52b19cbbefa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 876ec20566a20c24c8f0e52b19cbbefa, type: 3}
       propertyPath: m_TagString
       value: Car
       objectReference: {fileID: 0}

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class WalkMan : MonoBehaviour
 {
     [SerializeField] Material MTLTOCHANGE;
+    [SerializeField] LayerMask DamagableLayerMask;
     HealthComp healthComp;
     Coroutine healthRegenCore;
 
@@ -24,7 +25,11 @@ public class WalkMan : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Car"))
+        int otherLayerAsDigit = other.gameObject.layer;
+        int LayerMaskData = DamagableLayerMask;
+
+        Debug.Log(other.gameObject.name);
+        if ( (LayerMaskData & (1 << otherLayerAsDigit)) != 0)
         {
             healthComp.CallTakeDmg(1);
             MTLTOCHANGE.SetFloat("_Progress",healthComp.GetCurrentHitPoints()/healthComp.GetMaxHitPoints());

@@ -45,7 +45,7 @@ public class InputComponent : MonoBehaviour
         _playerInput.XRRightController.TriggerBtn.performed += ctx => RightHand.TriggerButtonPressed();
         _playerInput.XRRightController.TriggerBtn.canceled += ctx => RightHand.TriggerButtonRelease();
 
-        _playerInput.XRRightController.AButton.performed += ctx => RightHand.PrimaryButtonPressed();
+        //_playerInput.XRRightController.AButton.performed += ctx => RightHand.PrimaryButtonPressed();
     }
     private void LeftHandInputs()
     {
