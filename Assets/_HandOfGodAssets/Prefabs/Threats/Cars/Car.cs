@@ -32,7 +32,7 @@ public class Car : Threat, IDragable
         DragRef.transform.parent = grabber.transform;
     }
 
-    public override void Init()
+    public override void Init(ThreatSpawner spawner)
     {
         OrbitMovementComp orbitMovementComp = GetComponent<OrbitMovementComp>();
         Transform walkManTrans = GameplayStatics.GetWalkmanTransform();
@@ -133,7 +133,7 @@ public class Car : Threat, IDragable
         }
     }
 
-    public void BlowUp()
+    public override void BlowUp()
     {
         GameObject newEffect = Instantiate(ExplosionEffect, ExplosionSpawn);
         newEffect.transform.parent = null;

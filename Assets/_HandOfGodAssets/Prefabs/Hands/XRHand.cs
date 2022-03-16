@@ -102,7 +102,7 @@ public class XRHand : MonoBehaviour , XRControllerInterface
 
     internal void TriggerButtonRelease()
     {
-        if(dragableObjectInHand != null)
+        if(dragableObjectInHand as UnityEngine.Object)
         {
             dragableObjectInHand.Release(_velocity);
         }

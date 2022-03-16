@@ -4,5 +4,7 @@ using UnityEngine;
 
 public abstract class Threat : MonoBehaviour
 {
-    public abstract void Init();
+    public abstract void Init(ThreatSpawner spawner);
+
+    public abstract void BlowUp();
 }

@@ -33,7 +33,7 @@ public class WalkMan : MonoBehaviour
         {
             healthComp.CallTakeDmg(1);
             MTLTOCHANGE.SetFloat("_Progress",healthComp.GetCurrentHitPoints()/healthComp.GetMaxHitPoints());
-            other.GetComponentInParent<Car>().BlowUp();
+            other.GetComponentInParent<Threat>().BlowUp();
             if(healthRegenCore != null)
             {
                 StopCoroutine(healthRegenCore);

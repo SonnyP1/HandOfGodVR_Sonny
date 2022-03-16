@@ -5,6 +5,11 @@ using UnityEngine;
 public class ThreatSpawner : MonoBehaviour
 {
     [SerializeField] Threat[] Threats;
+    [SerializeField] BoxCollider MetoriteSpawnBoxCollider;
+    public BoxCollider GetMetoriteSpawnBoxCollider()
+    {
+        return MetoriteSpawnBoxCollider;
+    }
     [SerializeField] float MinSpawnInterval = 1f;
     [SerializeField] float MaxSpawnInterval = 5f;
     void Start()
@@ -28,6 +33,6 @@ public class ThreatSpawner : MonoBehaviour
 
         int RandomIndex = Random.Range(0, Threats.Length);
         Threat newThreat = Instantiate(Threats[RandomIndex]);
-        newThreat.Init();
+        newThreat.Init(this);
     }
 }

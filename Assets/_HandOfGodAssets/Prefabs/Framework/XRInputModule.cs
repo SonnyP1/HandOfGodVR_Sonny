@@ -54,6 +54,18 @@ public class XRInputModule : PointerInputModule
 
         _playerInput.XRLeftController.TriggerBtn.performed += LeftTriggerPressed;
         _playerInput.XRLeftController.TriggerBtn.canceled += LeftTriggerCanceled;
+
+        _playerInput.XRRightController.position.performed += OnRightTriggerMoved;
+        _playerInput.XRLeftController.position.performed += OnLeftTriggerMoved;
+    }
+
+    private void OnLeftTriggerMoved(InputAction.CallbackContext obj)
+    {
+        OnTriggerMove(_leftControllerInterface, _leftControllerData);
+    }
+    private void OnRightTriggerMoved(InputAction.CallbackContext obj)
+    {
+        OnTriggerMove(_rightControllerInterface, _rightControllerData);
     }
 
     private void LeftTriggerCanceled(InputAction.CallbackContext obj)
@@ -76,6 +88,23 @@ public class XRInputModule : PointerInputModule
         OnTriggerPressed(_rightControllerInterface,_rightControllerData);
     }
 
+    void OnTriggerMove(XRControllerInterface xRControllerInterface, PointerEventData eventData)
+    {
+        if(xRControllerInterface == null || eventData == null)
+        {
+            return;
+        }
+        eventData.position = xRControllerInterface.GetPointerScreenPosition();
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        eventSystem.RaycastAll(eventData, raycastResults);
+        eventData.pointerCurrentRaycast = FindFirstRaycast(raycastResults);
+
+        ProcessMove(eventData);
+        if(eventData.dragging)
+        {
+            ExecuteEvents.Execute(eventData.pointerDrag, eventData, ExecuteEvents.dragHandler);
+        }
+    }
     private void OnTriggerRelease(XRControllerInterface xRControllerInterface, PointerEventData eventData)
     {
         if (xRControllerInterface == null || eventData == null)
@@ -89,6 +118,20 @@ public class XRInputModule : PointerInputModule
         eventData.pointerCurrentRaycast = FindFirstRaycast(raycastResults);
 
         ExecuteEvents.Execute(eventData.pointerPress,eventData,ExecuteEvents.pointerUpHandler);
+        GameObject currentPointer = ExecuteEvents.GetEventHandler<IPointerDownHandler>(eventData.pointerCurrentRaycast.gameObject);
+        if (eventData.pointerPress == currentPointer)
+        {
+            ExecuteEvents.Execute(eventData.pointerPress,eventData,ExecuteEvents.pointerClickHandler);
+        }
+
+        eventData.pointerPress = null;
+
+        if(eventData.dragging)
+        {
+            ExecuteEvents.Execute(eventData.pointerDrag, eventData, ExecuteEvents.endDragHandler);
+            eventData.pointerDrag = null;
+            eventData.dragging = false;
+        }
     }
     private void OnTriggerPressed(XRControllerInterface xRControllerInterface,PointerEventData eventData)
     {
@@ -109,6 +152,15 @@ public class XRInputModule : PointerInputModule
             eventData.pointerPressRaycast = eventData.pointerCurrentRaycast;
             eventData.eligibleForClick = true;
             eventData.pointerPress = pointerDownObject;
+        }
+
+        GameObject pointerDragObject = ExecuteEvents.GetEventHandler<IDragHandler>(eventData.pointerCurrentRaycast.gameObject);
+        if(pointerDragObject != null)
+        {
+            ExecuteEvents.Execute(pointerDragObject, eventData, ExecuteEvents.initializePotentialDrag);
+            eventData.pointerPressRaycast = eventData.pointerCurrentRaycast;
+            eventData.dragging = true;
+            eventData.pointerDrag = pointerDragObject;
         }
     }
 
