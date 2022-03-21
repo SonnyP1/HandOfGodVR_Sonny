@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class HailCloud : Threat , IDragable
 {
+    [SerializeField] GameObject ExplosionEffect;
+    [SerializeField] Transform ExplosionSpawnTransform;
+    OrbitMovementComp _orbitMovementComp;
     public void Grab(GameObject grabber, Vector3 grabPoint)
     {
-        throw new System.NotImplementedException();
+        _orbitMovementComp.enabled = false;
     }
     public void Release(Vector3 ThrowVelocity)
     {
-        throw new System.NotImplementedException();
+        _orbitMovementComp.enabled = true;
     }
 
     public override void Init(ThreatSpawner spawner)
     {
-        OrbitMovementComp orbitMovementComp = GetComponent<OrbitMovementComp>();
+        _orbitMovementComp = GetComponent<OrbitMovementComp>();
         Transform walkManTrans = GameplayStatics.GetWalkmanTransform();
         Vector3 SpawnRotUp = new Vector3(Random.Range(0,360),
             0,
@@ -23,16 +26,28 @@ public class HailCloud : Threat , IDragable
         Vector3 SpawnRotForward = transform.forward * Random.Range(0, 50);
 
         Quaternion SpawnRot = Quaternion.LookRotation(SpawnRotForward, SpawnRotUp);
-        orbitMovementComp.SetRotation(SpawnRot);
+        _orbitMovementComp.SetRotation(SpawnRot);
+        StartCoroutine(BlowUpTimer());
     }
 
     public override void BlowUp()
     {
-        throw new System.NotImplementedException();
+        GameObject newEffect = Instantiate(ExplosionEffect, ExplosionSpawnTransform);
+        newEffect.transform.parent = null;
+        if (gameObject != null)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    IEnumerator BlowUpTimer()
+    {
+        yield return new WaitForSeconds(10f);
+        BlowUp();
     }
 }
