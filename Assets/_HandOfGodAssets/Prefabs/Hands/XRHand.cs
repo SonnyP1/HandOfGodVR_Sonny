@@ -10,17 +10,19 @@ public enum SideHand
 }
 public class XRHand : MonoBehaviour , XRControllerInterface
 {
-    [SerializeField] LazerPoint lazerPointer;
+    [SerializeField] LazerPoint LazerPointer;
     [SerializeField] Animator HandAnimator;
     [SerializeField] GameObject GrabPoint;
     [SerializeField] Transform ThrowVelocityRefPoint;
-    IDragable dragableObjectInHand;
+    IDragable _dragableObjectInHand;
+    //GameObject _objectCurrentlyDrag;
+    //InventoryComponent _currentObjInventoryComp;
+    //InventorySlot _currentInventorySlot;
 
 
     [Header("Values")]
     Vector3 _velocity;
     Vector3 _oldPos;
-    Vector3 PositionOneSecondBefore;
     private float _triggerInput;
     private float _gripInput;
     private Vector3 _pointerLoc;
@@ -37,7 +39,6 @@ public class XRHand : MonoBehaviour , XRControllerInterface
     }
     private void Start()
     {
-        PositionOneSecondBefore = transform.position;
         StartCoroutine(CalculateAverageSpeed());
     }
 
@@ -64,10 +65,43 @@ public class XRHand : MonoBehaviour , XRControllerInterface
         HandAnimator.SetFloat("Trigger", _triggerInput);
     }
 
+    InventorySlot GetInventorySlot()
+    {
+        InventorySlot inventorySlot = null;
+        GameObject currentOverUI = LazerPointer.GetCurrentPointingUI();
+        if(currentOverUI != null)
+        {
+            inventorySlot = currentOverUI.GetComponent<InventorySlot>();
+        }
+        return inventorySlot;
+    }
+
+    InventoryComponent GetInventoryComp()
+    {
+        InventoryComponent inventoryComp = null;
+        if (_dragableObjectInHand as UnityEngine.Object)
+        {
+            inventoryComp = _dragableObjectInHand.GetGameObject().GetComponent<InventoryComponent>();
+        }
+        return inventoryComp;
+    }
+
     internal void TriggerButtonPressed()
     {
+        if (LazerPointer != null)
+        {
+            InventorySlot inventorySlot = GetInventorySlot();
+            if(inventorySlot && !inventorySlot.IsSlotEmpty())
+            {
+                InventoryComponent inventoryComp = GetInventoryComp();
+                if (inventoryComp != null)
+                {
+                    inventorySlot.GrabItem();
+                }   
+            }
+        }
 
-        if(lazerPointer != null && lazerPointer.GetFocusedObject(out GameObject objectInFocus,out Vector3 contactPoint))
+        if(LazerPointer != null && LazerPointer.GetFocusedObject(out GameObject objectInFocus,out Vector3 contactPoint))
         {
             IDragable objectAsDragable = objectInFocus.GetComponent<IDragable>();
             if(objectAsDragable == null)
@@ -78,11 +112,34 @@ public class XRHand : MonoBehaviour , XRControllerInterface
             if(objectAsDragable != null)
             {
                 objectAsDragable.Grab(GrabPoint, contactPoint);
-                dragableObjectInHand = objectAsDragable;
+                _dragableObjectInHand = objectAsDragable;
             }
+
         }
 
     }
+    internal void TriggerButtonRelease()
+    {
+        if (LazerPointer != null)
+        {
+            InventorySlot inventorySlot = GetInventorySlot();
+            if (inventorySlot && inventorySlot.IsSlotEmpty())
+            {
+                InventoryComponent inventoryComp = GetInventoryComp();
+                if (inventoryComp != null)
+                {
+                    inventorySlot.StoreItem(inventoryComp);
+                    return;
+                }
+            }
+        }
+
+        if (_dragableObjectInHand as UnityEngine.Object)
+        {
+            _dragableObjectInHand.Release(_velocity);
+        }
+    }
+
     internal void MenuButtonPressed()
     {
         if (!_pauseBool)
@@ -100,19 +157,11 @@ public class XRHand : MonoBehaviour , XRControllerInterface
 
     }
 
-    internal void TriggerButtonRelease()
-    {
-        if(dragableObjectInHand as UnityEngine.Object)
-        {
-            dragableObjectInHand.Release(_velocity);
-        }
-    }
-
     public Vector2 GetPointerScreenPosition()
     {
-        if(lazerPointer!=null)
+        if(LazerPointer!=null)
         {
-            return lazerPointer.GetPointerScreenPosition();
+            return LazerPointer.GetPointerScreenPosition();
         }
         return Vector2.zero;
     }

@@ -9,10 +9,11 @@ Shader "Unlit/ProgressBarShader"
     }
     SubShader
     {
-        Tags {"Quene" ="Transparent" "RenderType"="Transparent" }
+        Tags {"Queue" ="Transparent" "RenderType"="Transparent" }
         ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
         LOD 100
+        Cull off
 
         Pass
         {

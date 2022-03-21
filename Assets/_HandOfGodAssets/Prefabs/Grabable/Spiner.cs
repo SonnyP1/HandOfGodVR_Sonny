@@ -9,6 +9,12 @@ public class Spiner : MonoBehaviour , IDragable
     [SerializeField] Transform ObjectSpined;
     [SerializeField] Transform SpinOffset;
     GameObject _lookRef;
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
     public void Grab(GameObject grabber, Vector3 grabPoint)
     {
         _lookRef.transform.position = grabPoint;
@@ -37,4 +43,6 @@ public class Spiner : MonoBehaviour , IDragable
             SpinOffset.rotation =  Quaternion.Slerp(SpinOffset.transform.rotation, goalRotation, lerpAlpha);
         }
     }
+
+
 }

@@ -20,12 +20,13 @@ public class Meterorite : Threat, IDragable
         _rb.isKinematic = true;
         transform.parent = grabber.transform;
         transform.position = grabPoint;
+        StopAllCoroutines();
     }
     public void Release(Vector3 ThrowVelocity)
     {
         transform.parent = null;
         _rb.isKinematic = false;
-        _rb.velocity = ThrowVelocity*100;
+        _rb.velocity = -ThrowVelocity * 0.5f;
         StartCoroutine(BlowUpTimer());
     }
     public override void Init(ThreatSpawner spawner)
@@ -73,4 +74,8 @@ public class Meterorite : Threat, IDragable
         BlowUp();
     }
 
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

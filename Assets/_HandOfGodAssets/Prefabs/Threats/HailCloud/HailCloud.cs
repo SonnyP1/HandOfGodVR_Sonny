@@ -31,4 +31,8 @@ public class HailCloud : Threat , IDragable
         throw new System.NotImplementedException();
     }
 
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

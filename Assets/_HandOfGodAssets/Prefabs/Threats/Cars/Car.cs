@@ -139,4 +139,9 @@ public class Car : Threat, IDragable
         newEffect.transform.parent = null;
         Destroy(gameObject);
     }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

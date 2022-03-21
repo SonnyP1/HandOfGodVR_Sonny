@@ -15,7 +15,7 @@ Shader "Unlit/HealthBarShader"
         LOD 100
         ZWrite off
         Blend SrcAlpha OneMinusSrcAlpha
-
+        Cull off
         Pass
         {
             CGPROGRAM
