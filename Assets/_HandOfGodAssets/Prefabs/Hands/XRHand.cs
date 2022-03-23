@@ -40,6 +40,7 @@ public class XRHand : MonoBehaviour , XRControllerInterface
     private void Start()
     {
         StartCoroutine(CalculateAverageSpeed());
+        GameplayStatics.UnPauseGame();
     }
 
     internal void UpdateGripAxis(float v)
@@ -144,13 +145,13 @@ public class XRHand : MonoBehaviour , XRControllerInterface
     {
         if (!_pauseBool)
         {
-            FindObjectOfType<PauseMenu>().VisibleSwitch();
+            FindObjectOfType<UIManager>().VisibleSwitch();
             GameplayStatics.PauseGame();
             _pauseBool = true;
         }
         else if(_pauseBool)
         {
-            FindObjectOfType<PauseMenu>().VisibleSwitch();
+            FindObjectOfType<UIManager>().VisibleSwitch();
             GameplayStatics.UnPauseGame();
             _pauseBool = false;
         }

@@ -27,9 +27,8 @@ public class HailCloud : Threat , IDragable
 
         Quaternion SpawnRot = Quaternion.LookRotation(SpawnRotForward, SpawnRotUp);
         _orbitMovementComp.SetRotation(SpawnRot);
-        StartCoroutine(BlowUpTimer());
+        //StartCoroutine(BlowUpTimer());
     }
-
     public override void BlowUp()
     {
         GameObject newEffect = Instantiate(ExplosionEffect, ExplosionSpawnTransform);

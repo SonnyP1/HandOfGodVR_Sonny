@@ -24,18 +24,25 @@ public class InputComponent : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerInput?.Enable();
+        _playerInput?.Disable();
     }
 
     private void Start()
     {
-        RightHandInputs();
-        LeftHandInputs();
+        if(_playerInput != null)
+        {
+            RightHandInputs();
+            LeftHandInputs();
+        }
     }
 
 
     private void RightHandInputs()
     {
+        if (RightHand == null)
+        {
+            return;
+        }
         _playerInput.XRRightController.position.performed += ctx => RightHand.UpdateLocalPosition(ctx.ReadValue<Vector3>());
         _playerInput.XRRightController.rotation.performed += ctx => RightHand.UpdateLocalRotation(ctx.ReadValue<Quaternion>());
 
@@ -49,6 +56,10 @@ public class InputComponent : MonoBehaviour
     }
     private void LeftHandInputs()
     {
+        if(LeftHand == null)
+        {
+            return;
+        }
         _playerInput.XRLeftController.position.performed += ctx => LeftHand.UpdateLocalPosition(ctx.ReadValue<Vector3>());
         _playerInput.XRLeftController.rotation.performed += ctx => LeftHand.UpdateLocalRotation(ctx.ReadValue<Quaternion>());
 

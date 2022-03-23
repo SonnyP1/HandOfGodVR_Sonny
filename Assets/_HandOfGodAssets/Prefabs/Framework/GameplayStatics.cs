@@ -44,7 +44,10 @@ public static class GameplayStatics
     static Earth earth;
 
 
-
+    public static void ChangeTimeScaleBackToOneOnLoad()
+    {
+        UnPauseGame();
+    }
 
 
     public static void LoadScene(string levelToLoad)

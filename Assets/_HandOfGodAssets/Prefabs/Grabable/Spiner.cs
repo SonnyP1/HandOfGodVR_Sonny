@@ -17,6 +17,11 @@ public class Spiner : MonoBehaviour , IDragable
 
     public void Grab(GameObject grabber, Vector3 grabPoint)
     {
+        OrbitMovementComp orbitMovementComp =  GetComponent<OrbitMovementComp>();
+        if (orbitMovementComp)
+        {
+            orbitMovementComp.enabled = false;
+        }
         _lookRef.transform.position = grabPoint;
         _lookRef.transform.parent = grabber.transform;
         SpinOffset.LookAt(_lookRef.transform,Vector3.up);
@@ -25,6 +30,11 @@ public class Spiner : MonoBehaviour , IDragable
 
     public void Release(Vector3 ThrowVelocity)
     {
+        OrbitMovementComp orbitMovementComp = GetComponent<OrbitMovementComp>();
+        if (orbitMovementComp)
+        {
+            orbitMovementComp.enabled = true;
+        }
         ObjectSpined.parent = transform;
         _lookRef.transform.parent = null;
     }
@@ -32,6 +42,11 @@ public class Spiner : MonoBehaviour , IDragable
     void Start()
     {
         _lookRef = new GameObject($"{gameObject.name} look ref");
+        GameObject spinOffset = GameObject.FindGameObjectWithTag("SpinOffset");
+        if(spinOffset)
+        {
+            SpinOffset = spinOffset.transform;
+        }
     }
 
     void Update()

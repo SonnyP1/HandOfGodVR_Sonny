@@ -11,19 +11,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseCanvas.enabled = false;
     }
-    public void VisibleSwitch()
-    {
-        if(!_isVisible)
-        {
-            _isVisible = true;
-            PauseCanvas.enabled = true;
-        }
-        else
-        {
-            _isVisible = false;
-            PauseCanvas.enabled = false;
-        }
-    }
+
 
     public void testBtn()
     {
