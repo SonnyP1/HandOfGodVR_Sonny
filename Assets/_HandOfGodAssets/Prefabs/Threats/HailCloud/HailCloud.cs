@@ -19,6 +19,7 @@ public class HailCloud : Threat , IDragable
 
     public override void Init(ThreatSpawner spawner)
     {
+        base.Init(spawner);
         _orbitMovementComp = GetComponent<OrbitMovementComp>();
         Transform walkManTrans = GameplayStatics.GetWalkmanTransform();
         Vector3 SpawnRotUp = new Vector3(Random.Range(0,360),
@@ -32,6 +33,7 @@ public class HailCloud : Threat , IDragable
     }
     public override void BlowUp()
     {
+        base.BlowUp();
         GameObject newEffect = Instantiate(ExplosionEffect, ExplosionSpawnTransform);
         newEffect.transform.parent = null;
         if (gameObject != null)
@@ -45,7 +47,6 @@ public class HailCloud : Threat , IDragable
         if (_blowUpCore != null)
         {
             StopCoroutine(_blowUpCore);
-            return;
         }
     }
     public void StartBlowUpTimer()

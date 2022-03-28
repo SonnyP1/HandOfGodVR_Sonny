@@ -4,7 +4,15 @@ using UnityEngine;
 
 public abstract class Threat : MonoBehaviour
 {
-    public abstract void Init(ThreatSpawner spawner);
+    private ThreatSpawner _spawner;
+    public virtual void Init(ThreatSpawner spawner)
+    {
+        _spawner = spawner;
+        _spawner.AddThreatToSpawnerList(this);
+    }
 
-    public abstract void BlowUp();
+    public virtual void BlowUp()
+    {
+        _spawner.RemoveThreatInSpawnerList(this);
+    }
 }

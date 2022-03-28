@@ -34,6 +34,7 @@ public class Car : Threat, IDragable
 
     public override void Init(ThreatSpawner spawner)
     {
+        base.Init(spawner);
         OrbitMovementComp orbitMovementComp = GetComponent<OrbitMovementComp>();
         Transform walkManTrans = GameplayStatics.GetWalkmanTransform();
         Vector3 SpawnRotUp = -walkManTrans.up;
@@ -135,6 +136,7 @@ public class Car : Threat, IDragable
 
     public override void BlowUp()
     {
+        base.BlowUp();
         GameObject newEffect = Instantiate(ExplosionEffect, ExplosionSpawn);
         newEffect.transform.parent = null;
         Destroy(gameObject);

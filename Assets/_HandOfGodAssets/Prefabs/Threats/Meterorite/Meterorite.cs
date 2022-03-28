@@ -31,7 +31,12 @@ public class Meterorite : Threat, IDragable
     }
     public override void Init(ThreatSpawner spawner)
     {
+        base.Init(spawner);
         _spawnBoundaryBox = spawner.GetMetoriteSpawnBoxCollider();
+        if(_spawnBoundaryBox == null)
+        {
+            return;
+        }
         Transform walkManTrans = GameplayStatics.GetWalkmanTransform();
 
         Vector3 origin = _spawnBoundaryBox.transform.position;
@@ -60,6 +65,7 @@ public class Meterorite : Threat, IDragable
     }
     public override void BlowUp()
     {
+        base.BlowUp();
         GameObject newEffect = Instantiate(ExplosionEffect,transform);
         newEffect.transform.parent = null;
         if(gameObject != null)
