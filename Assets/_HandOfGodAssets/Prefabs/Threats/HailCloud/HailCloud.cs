@@ -42,11 +42,18 @@ public class HailCloud : Threat , IDragable
 
     public void StopBlowUpTimer()
     {
-        StopCoroutine(_blowUpCore);
+        if (_blowUpCore != null)
+        {
+            StopCoroutine(_blowUpCore);
+            return;
+        }
     }
     public void StartBlowUpTimer()
     {
-        StopCoroutine(_blowUpCore);
+        if(_blowUpCore != null)
+        {
+            StopCoroutine(_blowUpCore);
+        }
         _blowUpCore = StartCoroutine(BlowUpTimer());
     }
     public GameObject GetGameObject()
