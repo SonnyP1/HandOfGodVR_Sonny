@@ -21,6 +21,11 @@ public class Spiner : MonoBehaviour , IDragable
         if (orbitMovementComp)
         {
             orbitMovementComp.enabled = false;
+            HailCloud cloud = GetComponent<HailCloud>();
+            if(cloud != null)
+            {
+                cloud.StopBlowUpTimer();
+            }
         }
         _lookRef.transform.position = grabPoint;
         _lookRef.transform.parent = grabber.transform;
@@ -34,6 +39,11 @@ public class Spiner : MonoBehaviour , IDragable
         if (orbitMovementComp)
         {
             orbitMovementComp.enabled = true;
+            HailCloud cloud = GetComponent<HailCloud>();
+            if (cloud != null)
+            {
+                cloud.StartBlowUpTimer();
+            }
         }
         ObjectSpined.parent = transform;
         _lookRef.transform.parent = null;

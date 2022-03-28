@@ -7,6 +7,7 @@ public class HailCloud : Threat , IDragable
     [SerializeField] GameObject ExplosionEffect;
     [SerializeField] Transform ExplosionSpawnTransform;
     OrbitMovementComp _orbitMovementComp;
+    Coroutine _blowUpCore;
     public void Grab(GameObject grabber, Vector3 grabPoint)
     {
         _orbitMovementComp.enabled = false;
@@ -27,7 +28,7 @@ public class HailCloud : Threat , IDragable
 
         Quaternion SpawnRot = Quaternion.LookRotation(SpawnRotForward, SpawnRotUp);
         _orbitMovementComp.SetRotation(SpawnRot);
-        //StartCoroutine(BlowUpTimer());
+        _blowUpCore = StartCoroutine(BlowUpTimer());
     }
     public override void BlowUp()
     {
@@ -39,6 +40,15 @@ public class HailCloud : Threat , IDragable
         }
     }
 
+    public void StopBlowUpTimer()
+    {
+        StopCoroutine(_blowUpCore);
+    }
+    public void StartBlowUpTimer()
+    {
+        StopCoroutine(_blowUpCore);
+        _blowUpCore = StartCoroutine(BlowUpTimer());
+    }
     public GameObject GetGameObject()
     {
         return gameObject;
